@@ -86,6 +86,16 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             print("error")
         }
         
+        
+        //Tableviewa dönmeden önce yeni eklenen resmin bilgilerinin tableviewa eklenmesi
+        NotificationCenter.default.post(name: NSNotification.Name("newData"), object: nil) // diğer view controllerlara mesaj yollamamızı sağlıyor
+        
+        
+        // save buttonuna basınca tekrar tableviewa dönebilmek için
+        self.navigationController?.popViewController(animated: true)
+        
+        
+        
     }
     
 }

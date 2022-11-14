@@ -28,12 +28,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addClicked))
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+    
+        NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name("newData"), object: nil)
+        
+    }
+    
+    
+    
+    
     @objc func addClicked(){
         performSegue(withIdentifier: "SecondVC", sender: nil)
     }
     
     //Bu fonksiyon altında coredatadan verilerimizi çekeceğiz.
-    func getData(){
+    @objc func getData(){
+        
+        //coredatadaki bilgileri almadan önce array temizlenmeli ki aynı verileri tekrar tekrar kaydetmesin
+        nameArray.removeAll(keepingCapacity: false)
+        idArray.removeAll(keepingCapacity: false)
+        
         // contexti yine çağırmamız gerek
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
