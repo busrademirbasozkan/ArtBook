@@ -24,8 +24,37 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         // bir hücre seçilip içindeki bilgiler gösterilmek isteniyorsa yine coredatadan bilgiler alınır
         if chosenPainting != "" {
             //CoreData
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
             
-            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Paintings")
+            let idString = chosenID?.uuidString
+            fetchRequest.predicate = NSPredicate(format: "id = %@", idString!)
+            fetchRequest.returnsObjectsAsFaults = false
+            do{
+                let results = try context.fetch(fetchRequest)
+                if results.count > 0 {
+                    for result in results as! [NSManagedObject]{
+                        if let name = result.value(forKey: "name") as? String{
+                            nameTextField.text = name
+                        }
+                        if let artist = result.value(forKey: "artist") as? String{
+                            artistTextField.text = artist
+                        }
+                        if let year = result.value(forKey: "year") as? Int{
+                            yearTextField.text = String(year)
+                        }
+                        if let imageData = result.value(forKey: "image") as? Data{
+                            let image = UIImage(data: imageData)
+                            imageView.image = image
+                        }
+                        
+                    }
+                }
+            }
+            catch{
+                
+            }
         }
         
         

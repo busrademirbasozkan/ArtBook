@@ -63,15 +63,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         do {
             let results = try context.fetch(fetchRequest) //results bir dizi. fetch ettiğimiz değişkenleri bu diziye atayarak tek tek inceleyebilirim
             
-            for result in results as! [NSManagedObject]{ //NSManagedObject coredata model objesi
-                if let name = result.value(forKey: "name") as? String{
-                    self.nameArray.append(name)
+            if results.count > 0 {
+                for result in results as! [NSManagedObject]{ //NSManagedObject coredata model objesi
+                    if let name = result.value(forKey: "name") as? String{
+                        self.nameArray.append(name)
+                    }
+                    if let id = result.value(forKey: "id") as? UUID{
+                        self.idArray.append(id)
+                    }
+                    
+                    self.tableView.reloadData() // tableviewa yeni verinin geldiğini ve güncelleme yapılması gerektiğini bildirir.
                 }
-                if let id = result.value(forKey: "id") as? UUID{
-                    self.idArray.append(id)
-                }
-                
-                self.tableView.reloadData() // tableviewa yeni verinin geldiğini ve güncelleme yapılması gerektiğini bildirir.
             }
             
         }
