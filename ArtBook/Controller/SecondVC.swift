@@ -15,8 +15,19 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var artistTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
     
+    var chosenPainting = ""
+    var chosenID : UUID?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // bir hücre seçilip içindeki bilgiler gösterilmek isteniyorsa yine coredatadan bilgiler alınır
+        if chosenPainting != "" {
+            //CoreData
+            
+            
+        }
+        
         
         
         

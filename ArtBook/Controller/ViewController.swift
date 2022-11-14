@@ -16,6 +16,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var idArray = [UUID]()
     var nameArray = [String]()
     
+    var selectedPaintings = ""
+    var selectedID : UUID?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,6 +41,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     @objc func addClicked(){
+        selectedPaintings = ""
         performSegue(withIdentifier: "SecondVC", sender: nil)
     }
     
@@ -86,4 +90,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedPaintings = nameArray[indexPath.row]
+        selectedID = idArray[indexPath.row]
+        performSegue(withIdentifier: "SecondVC", sender: nil)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "SecondVC"{
+            let destination = segue.destination as! SecondVC
+            destination.chosenID = selectedID
+            destination.chosenPainting = selectedPaintings
+        }
+    }
+    
 }
+    
+
