@@ -14,6 +14,8 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var artistTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
+    @IBOutlet weak var savebutton: UIButton!
+    
     
     var chosenPainting = ""
     var chosenID : UUID?
@@ -23,6 +25,9 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         // bir hücre seçilip içindeki bilgiler gösterilmek isteniyorsa yine coredatadan bilgiler alınır
         if chosenPainting != "" {
+            //savebutton.isEnabled = false // Verileri görüntülemek için açtığımızda savebutton tıklanamaz duruma geldi.
+            savebutton.isHidden = true
+            
             //CoreData
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
@@ -52,8 +57,10 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 }
             }
             catch{
-                
             }
+        }else{
+            savebutton.isHidden = false
+            savebutton.isEnabled = false
         }
         
         
@@ -86,6 +93,7 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     //görseli seçince ne olacağını tanımalamalıyız
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imageView.image = info[.originalImage] as? UIImage // seçilen resmi original yada editlenmiş olarak mı kaydedeceğimizi seçeriz. Casting yaparak gerçekleşitirilir çünkü kullanıcı fotoğraf seçmeyebilir. Böyle bir durumda sıkıntı yaşanmaması için
+        savebutton.isEnabled = true
         self.dismiss(animated: true) // açılan pickerın kapatılabilmesi için
     }
     
