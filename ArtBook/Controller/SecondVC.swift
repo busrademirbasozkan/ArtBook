@@ -48,7 +48,6 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                             let image = UIImage(data: imageData)
                             imageView.image = image
                         }
-                        
                     }
                 }
             }
@@ -56,7 +55,6 @@ class SecondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 
             }
         }
-        
         
         
         
